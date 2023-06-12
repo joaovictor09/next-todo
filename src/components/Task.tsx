@@ -1,11 +1,16 @@
+import { TasksContext } from '@/contexts/TasksContext'
 import { Check, Trash } from 'lucide-react'
+import { useContext } from 'react'
 
 interface TaskProps {
+  id: string
   name: string
   completed: boolean
 }
 
-export function Task({ completed, name }: TaskProps) {
+export function Task({ completed, name, id }: TaskProps) {
+  const { changeTaskComplete } = useContext(TasksContext)
+
   return (
     <li
       className={`flex w-full items-center gap-3 rounded-lg border border-gray-400 bg-gray-500 p-4 ${
@@ -18,6 +23,9 @@ export function Task({ completed, name }: TaskProps) {
             ? 'border-purple-dark bg-purple-dark hover:border-purple hover:bg-purple'
             : 'border-2 border-blue hover:bg-blue/20'
         }`}
+        onClick={() => {
+          changeTaskComplete(id)
+        }}
       >
         {completed ? (
           <Check size={14} strokeWidth={3} className="text-gray-100" />

@@ -11,6 +11,7 @@ interface Task {
 interface TransactionsContextType {
   tasks: Task[]
   createTask: (name: string) => void
+  changeTaskComplete: (id: string) => void
 }
 
 export const TasksContext = createContext({} as TransactionsContextType)
@@ -20,21 +21,21 @@ interface TasksProviderProps {
 }
 
 export function TasksProvider({ children }: TasksProviderProps) {
-  const [tasks, setTasks] = useState<Task[]>([
-    {
-      completed: true,
-      id: crypto.randomUUID(),
-      name: 'teste',
-    },
-    {
-      completed: false,
-      id: crypto.randomUUID(),
-      name: 'teste',
-    },
-  ])
+  const [tasks, setTasks] = useState<Task[]>([])
 
   function createTask(name: string) {
     setTasks([...tasks, { name, completed: true, id: crypto.randomUUID() }])
+  }
+
+  function changeTaskComplete(id: string) {
+    const newTaskArray: Task[] = tasks.map((task) => {
+      if (task.id === id) {
+        task.completed = !task.completed
+      }
+      return task
+    })
+
+    setTasks(newTaskArray)
   }
 
   return (
@@ -42,6 +43,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
       value={{
         tasks,
         createTask,
+        changeTaskComplete,
       }}
     >
       {children}

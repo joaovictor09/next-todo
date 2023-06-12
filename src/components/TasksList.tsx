@@ -31,7 +31,12 @@ export function TaskList() {
           </div>
         ) : (
           tasks.map((task) => (
-            <Task completed={task.completed} name={task.name} key={task.id} />
+            <Task
+              id={task.id}
+              completed={task.completed}
+              name={task.name}
+              key={task.id}
+            />
           ))
         )}
       </ul>
