@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, createContext, useEffect, useState } from 'react'
+import { ReactNode, createContext, useState } from 'react'
 
 interface Task {
   id: string
@@ -20,15 +20,22 @@ interface TasksProviderProps {
 }
 
 export function TasksProvider({ children }: TasksProviderProps) {
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<Task[]>([
+    {
+      completed: true,
+      id: crypto.randomUUID(),
+      name: 'teste',
+    },
+    {
+      completed: false,
+      id: crypto.randomUUID(),
+      name: 'teste',
+    },
+  ])
 
   function createTask(name: string) {
-    setTasks([...tasks, { name, completed: false, id: crypto.randomUUID() }])
+    setTasks([...tasks, { name, completed: true, id: crypto.randomUUID() }])
   }
-
-  useEffect(() => {
-    createTask('Study')
-  }, [])
 
   return (
     <TasksContext.Provider

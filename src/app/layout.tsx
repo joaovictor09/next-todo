@@ -14,7 +14,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="pt-br">
       <TasksProvider>
-        <body className={inter.className}>{children}</body>
+        <body
+          className={`${inter.className} flex min-h-screen w-full flex-col items-center bg-gray-600 leading-[140%]`}
+        >
+          {children}
+        </body>
       </TasksProvider>
     </html>
   )
