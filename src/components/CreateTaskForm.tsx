@@ -13,6 +13,8 @@ export function CreateTaskForm() {
     event.preventDefault()
 
     createTask(taskName)
+
+    setTaskName('')
   }
 
   return (

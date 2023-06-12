@@ -9,7 +9,7 @@ interface TaskProps {
 }
 
 export function Task({ completed, name, id }: TaskProps) {
-  const { changeTaskComplete } = useContext(TasksContext)
+  const { changeTaskComplete, deleteTask } = useContext(TasksContext)
 
   return (
     <li
@@ -34,7 +34,10 @@ export function Task({ completed, name, id }: TaskProps) {
         )}
       </button>
       <span className="flex-1">{name}</span>
-      <button className="rounded-lg p-2 text-gray-300 transition-all hover:bg-gray-400 hover:text-danger">
+      <button
+        onClick={() => deleteTask(id)}
+        className="rounded-lg p-2 text-gray-300 transition-all hover:bg-gray-400 hover:text-danger"
+      >
         <Trash size={18} className="" />
       </button>
     </li>

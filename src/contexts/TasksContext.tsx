@@ -12,6 +12,7 @@ interface TransactionsContextType {
   tasks: Task[]
   createTask: (name: string) => void
   changeTaskComplete: (id: string) => void
+  deleteTask: (id: string) => void
 }
 
 export const TasksContext = createContext({} as TransactionsContextType)
@@ -38,12 +39,17 @@ export function TasksProvider({ children }: TasksProviderProps) {
     setTasks(newTaskArray)
   }
 
+  function deleteTask(id: string) {
+    setTasks(tasks.filter((task) => task.id !== id))
+  }
+
   return (
     <TasksContext.Provider
       value={{
         tasks,
         createTask,
         changeTaskComplete,
+        deleteTask,
       }}
     >
       {children}
