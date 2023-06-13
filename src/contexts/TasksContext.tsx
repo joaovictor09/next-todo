@@ -1,6 +1,13 @@
 'use client'
 
-import { ReactNode, createContext, useEffect, useState } from 'react'
+import {
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  createContext,
+  useEffect,
+  useState,
+} from 'react'
 
 interface Task {
   id: string
@@ -8,21 +15,22 @@ interface Task {
   completed: boolean
 }
 
-interface TransactionsContextType {
+interface TasksContextType {
   tasks: Task[]
+  setTasks: Dispatch<SetStateAction<Task[]>>
   createTask: (name: string) => void
   changeTaskComplete: (id: string) => void
   deleteTask: (id: string) => void
 }
 
-export const TasksContext = createContext({} as TransactionsContextType)
+export const TasksContext = createContext({} as TasksContextType)
 
 interface TasksProviderProps {
   children: ReactNode
 }
 
 export function TasksProvider({ children }: TasksProviderProps) {
-  const [tasks, setTasks] = useState<Task[]>([])
+  const [tasks, setTasks] = useState<Task[]>([] as Task[])
 
   function createTask(name: string) {
     setTasks([...tasks, { name, completed: false, id: crypto.randomUUID() }])
@@ -56,15 +64,15 @@ export function TasksProvider({ children }: TasksProviderProps) {
 
   useEffect(() => {
     async function fetchTasks() {
-      const res = await fetch('/api/tasks', {
+      const res = await fetch(`/api/tasks`, {
         method: 'GET',
       })
 
-      const { tasks } = await res.json()
+      if (res.ok === true) {
+        const tasks = await res.json()
 
-      console.log(tasks)
-
-      setTasks(tasks)
+        setTasks(tasks)
+      }
     }
 
     fetchTasks()
@@ -77,6 +85,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
         createTask,
         changeTaskComplete,
         deleteTask,
+        setTasks,
       }}
     >
       {children}

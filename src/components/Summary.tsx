@@ -1,3 +1,5 @@
+'use client'
+
 import { useSummary } from '@/hooks/Summary'
 
 export function Summary() {

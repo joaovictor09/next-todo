@@ -5,6 +5,9 @@ import { authOptions } from '../auth/[...nextauth]/route'
 
 export async function GET(request: Request) {
   const session = await getServerSession(authOptions)
+
+  // console.log(session)
+
   if (!session) {
     return
   }
@@ -14,7 +17,7 @@ export async function GET(request: Request) {
       userEmail: session.user?.email!,
     },
   })
-  return NextResponse.json({ tasks })
+  return NextResponse.json(tasks)
 }
 
 export async function POST(request: Request) {
@@ -71,8 +74,6 @@ export async function DELETE(request: Request) {
   if (!session || !id) {
     return
   }
-
-  console.log(id)
 
   const taskExists = await prisma.task.findFirst({
     where: {

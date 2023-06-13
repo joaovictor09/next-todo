@@ -1,3 +1,5 @@
+'use client'
+
 import { TasksContext } from '@/contexts/TasksContext'
 import { useContext, useMemo } from 'react'
 

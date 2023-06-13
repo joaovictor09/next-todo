@@ -30,7 +30,9 @@ export function CreateTaskForm() {
       onSubmit={handleCreateTask}
       className="flex h-14 w-full max-w-3xl items-center gap-2"
     >
-      <button onClick={() => signIn('github')}>SignIn</button>
+      <button className="text-white" onClick={() => signIn('github')}>
+        SignIn
+      </button>
       <input
         value={taskName}
         onChange={(e) => setTaskName(e.target.value)}

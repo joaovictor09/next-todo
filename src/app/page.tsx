@@ -1,23 +1,33 @@
-import { CreateTaskForm } from '@/components/CreateTaskForm'
-import { TaskList } from '@/components/TasksList'
 import Image from 'next/image'
 
+import { SignInButton } from '@/components/SignInButton'
+import { Github } from 'lucide-react'
 import { getServerSession } from 'next-auth'
+import { redirect } from 'next/navigation'
+import { AiOutlineGoogle } from 'react-icons/ai'
 import Logo from '../assets/Logo.svg'
-import { authOptions } from './api/auth/[...nextauth]/route'
 
 export default async function Home() {
-  const session = await getServerSession(authOptions)
+  const session = await getServerSession()
+  if (session) {
+    redirect('/tasks')
+  }
 
   return (
-    <main className="flex w-full flex-col items-center">
-      <div>{session && session.user?.name}</div>
-      <div className="flex w-full justify-center bg-gray-700 py-20">
-        <Image src={Logo} alt="Todo logo" height={48} />
-      </div>
-      <div className="-m-7 flex w-full max-w-3xl flex-col gap-5">
-        <CreateTaskForm />
-        <TaskList />
+    <main className="flex min-h-screen w-full flex-col items-center justify-center">
+      <div className="flex w-full max-w-lg flex-col items-center rounded-lg bg-gray-700 p-10">
+        <Image src={Logo} className="w-64" alt="Logo da marca" />
+
+        <div className="mt-10 flex w-full flex-col gap-5 border-t border-zinc-400 p-10 text-zinc-100">
+          <SignInButton signInProvider="github">
+            <Github className="text-purple-dark" size={24} />
+            SignIn with Github
+          </SignInButton>
+          <SignInButton signInProvider="google">
+            <AiOutlineGoogle className="text-purple-dark" size={24} />
+            SignIn with Google
+          </SignInButton>
+        </div>
       </div>
     </main>
   )
