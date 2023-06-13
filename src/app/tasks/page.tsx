@@ -1,17 +1,11 @@
 import { CreateTaskForm } from '@/components/CreateTaskForm'
 import { TaskList } from '@/components/TasksList'
 import Image from 'next/image'
+import Logo from '../../assets/Logo.svg'
 
-import { getServerSession } from 'next-auth'
-import Logo from '../assets/Logo.svg'
-import { authOptions } from './api/auth/[...nextauth]/route'
-
-export default async function Home() {
-  const session = await getServerSession(authOptions)
-
+export default function Tasks() {
   return (
     <main className="flex w-full flex-col items-center">
-      <div>{session && session.user?.name}</div>
       <div className="flex w-full justify-center bg-gray-700 py-20">
         <Image src={Logo} alt="Todo logo" height={48} />
       </div>

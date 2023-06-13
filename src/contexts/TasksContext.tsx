@@ -25,7 +25,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
   const [tasks, setTasks] = useState<Task[]>([])
 
   function createTask(name: string) {
-    setTasks([...tasks, { name, completed: true, id: crypto.randomUUID() }])
+    setTasks([...tasks, { name, completed: false, id: crypto.randomUUID() }])
   }
 
   function changeTaskComplete(id: string) {

@@ -1,6 +1,7 @@
 'use client'
 
 import { PlusCircle } from 'lucide-react'
+import { signIn } from 'next-auth/react'
 import { FormEvent, useContext, useState } from 'react'
 
 import { TasksContext } from '@/contexts/TasksContext'
@@ -9,10 +10,19 @@ export function CreateTaskForm() {
   const [taskName, setTaskName] = useState('')
   const { createTask } = useContext(TasksContext)
 
-  function handleCreateTask(event: FormEvent) {
+  async function handleCreateTask(event: FormEvent) {
     event.preventDefault()
 
     createTask(taskName)
+
+    const res = await fetch('/api/tasks', {
+      method: 'POST',
+      body: JSON.stringify({
+        name: taskName,
+      }),
+    })
+
+    console.log(res)
 
     setTaskName('')
   }
@@ -22,6 +32,7 @@ export function CreateTaskForm() {
       onSubmit={handleCreateTask}
       className="flex h-14 w-full max-w-3xl items-center gap-2"
     >
+      <button onClick={() => signIn('github')}>SignIn</button>
       <input
         value={taskName}
         onChange={(e) => setTaskName(e.target.value)}

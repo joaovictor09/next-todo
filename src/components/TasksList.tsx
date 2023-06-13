@@ -3,6 +3,7 @@
 import { TasksContext } from '@/contexts/TasksContext'
 import { ClipboardList } from 'lucide-react'
 import { useContext } from 'react'
+import { Summary } from './Summary'
 import { Task } from './Task'
 
 export function TaskList() {
@@ -10,16 +11,7 @@ export function TaskList() {
 
   return (
     <div className="flex w-full flex-col gap-6">
-      <div className="flex justify-between">
-        <div className="items center flex gap-2">
-          <span className="text-sm font-bold text-blue">Tarefas criadas</span>
-          <span className="rounded-full bg-gray-400 px-2 text-gray-200">0</span>
-        </div>
-        <div className="items center flex gap-2">
-          <span className="text-sm font-bold text-blue">Concluídas</span>
-          <span className="rounded-full bg-gray-400 px-2 text-gray-200">0</span>
-        </div>
-      </div>
+      <Summary />
       <ul className=" flex flex-col gap-3 text-lg text-white">
         {tasks.length === 0 ? (
           <div className="flex flex-col items-center justify-center rounded-lg border-t border-gray-400 py-16 text-gray-300">
