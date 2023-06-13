@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, createContext, useState } from 'react'
+import { ReactNode, createContext, useEffect, useState } from 'react'
 
 interface Task {
   id: string
@@ -28,7 +28,7 @@ export function TasksProvider({ children }: TasksProviderProps) {
     setTasks([...tasks, { name, completed: false, id: crypto.randomUUID() }])
   }
 
-  function changeTaskComplete(id: string) {
+  async function changeTaskComplete(id: string) {
     const newTaskArray: Task[] = tasks.map((task) => {
       if (task.id === id) {
         task.completed = !task.completed
@@ -36,12 +36,39 @@ export function TasksProvider({ children }: TasksProviderProps) {
       return task
     })
 
+    await fetch('/api/tasks', {
+      method: 'PATCH',
+      body: JSON.stringify({
+        id,
+      }),
+    })
+
     setTasks(newTaskArray)
   }
 
-  function deleteTask(id: string) {
+  async function deleteTask(id: string) {
     setTasks(tasks.filter((task) => task.id !== id))
+
+    await fetch(`/api/tasks?id=${id}`, {
+      method: 'DELETE',
+    })
   }
+
+  useEffect(() => {
+    async function fetchTasks() {
+      const res = await fetch('/api/tasks', {
+        method: 'GET',
+      })
+
+      const { tasks } = await res.json()
+
+      console.log(tasks)
+
+      setTasks(tasks)
+    }
+
+    fetchTasks()
+  }, [])
 
   return (
     <TasksContext.Provider

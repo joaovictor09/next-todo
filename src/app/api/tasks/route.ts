@@ -9,7 +9,7 @@ export async function GET(request: Request) {
     return
   }
 
-  const tasks = prisma.task.findMany({
+  const tasks = await prisma.task.findMany({
     where: {
       userEmail: session.user?.email!,
     },
@@ -34,7 +34,7 @@ export async function POST(request: Request) {
   return NextResponse.json({ tasks })
 }
 
-export async function UPDATE(request: Request) {
+export async function PATCH(request: Request) {
   const { id } = await request.json()
 
   const session = await getServerSession(authOptions)
@@ -64,12 +64,15 @@ export async function UPDATE(request: Request) {
 }
 
 export async function DELETE(request: Request) {
-  const { id } = await request.json()
+  const { searchParams } = new URL(request.url)
+  const id = searchParams.get('id')
 
   const session = await getServerSession(authOptions)
   if (!session || !id) {
     return
   }
+
+  console.log(id)
 
   const taskExists = await prisma.task.findFirst({
     where: {

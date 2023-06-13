@@ -15,14 +15,12 @@ export function CreateTaskForm() {
 
     createTask(taskName)
 
-    const res = await fetch('/api/tasks', {
+    await fetch('/api/tasks', {
       method: 'POST',
       body: JSON.stringify({
         name: taskName,
       }),
     })
-
-    console.log(res)
 
     setTaskName('')
   }
