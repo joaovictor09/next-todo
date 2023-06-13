@@ -13,9 +13,9 @@ export default async function Tasks() {
   }
 
   return (
-    <main className="relative flex w-full flex-col items-center">
+    <main className="flex min-h-screen w-full flex-col items-center px-5">
       <Profile />
-      <div className="relative -z-10 flex w-full justify-center bg-gray-700 py-20">
+      <div className="-z-10 flex w-full justify-center bg-gray-700 py-20">
         <Image src={Logo} alt="Todo logo" height={48} />
       </div>
       <div className="-m-7 flex w-full max-w-3xl flex-col gap-5">

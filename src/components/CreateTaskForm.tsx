@@ -1,7 +1,6 @@
 'use client'
 
 import { PlusCircle } from 'lucide-react'
-import { signIn } from 'next-auth/react'
 import { FormEvent, useContext, useState } from 'react'
 
 import { TasksContext } from '@/contexts/TasksContext'
@@ -32,7 +31,6 @@ export function CreateTaskForm() {
     >
       <button className="text-white" onClick={() => signIn('github')}>
         SignIn
-      </button>
       <input
         value={taskName}
         onChange={(e) => setTaskName(e.target.value)}
