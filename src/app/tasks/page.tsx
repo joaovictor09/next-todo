@@ -13,7 +13,7 @@ export default async function Tasks() {
   }
 
   return (
-    <main className="flex min-h-screen w-full flex-col items-center px-5">
+    <main className="flex min-h-screen w-full flex-col items-center">
       <Profile />
       <div className="-z-10 flex w-full justify-center bg-gray-700 py-20">
         <Image src={Logo} alt="Todo logo" height={48} />
